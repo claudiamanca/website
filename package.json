@@ -32,6 +32,7 @@
     "gulp-update": "^0.0.2",
     "jeet": "^6.1.4",
     "kouto-swiss": "^0.8.6",
+    "node-fetch": "^2.6.1",
     "rupture": "^0.6.1"
   }
 }

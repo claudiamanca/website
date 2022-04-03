@@ -1,15 +1,15 @@
-var gulp        = require('gulp'),
-	plumber     = require('gulp-plumber'),
+var gulp = require('gulp'),
+	plumber = require('gulp-plumber'),
 	browserSync = require('browser-sync'),
-	stylus      = require('gulp-stylus'),
-	uglify      = require('gulp-uglify'),
-	concat      = require('gulp-concat'),
-	jeet        = require('jeet'),
-	rupture     = require('rupture'),
-	koutoSwiss  = require('kouto-swiss'),
-	prefixer    = require('autoprefixer-stylus'),
-	imagemin    = require('gulp-imagemin'),
-	cp          = require('child_process');
+	stylus = require('gulp-stylus'),
+	uglify = require('gulp-uglify'),
+	concat = require('gulp-concat'),
+	jeet = require('jeet'),
+	rupture = require('rupture'),
+	koutoSwiss = require('kouto-swiss'),
+	prefixer = require('autoprefixer-stylus'),
+	imagemin = require('gulp-imagemin'),
+	cp = require('child_process');
 
 var messages = {
 	jekyllBuild: '<span style="color: grey">Running:</span> $ jekyll build'
@@ -22,7 +22,7 @@ var jekyllCommand = (/^win/.test(process.platform)) ? 'jekyll.bat' : 'jekyll';
  */
 gulp.task('jekyll-build', function (done) {
 	browserSync.notify(messages.jekyllBuild);
-	return cp.spawn(jekyllCommand, ['build'], {stdio: 'inherit'})
+	return cp.spawn(jekyllCommand, ['build'], { stdio: 'inherit' })
 		.on('close', done);
 });
 
@@ -36,7 +36,7 @@ gulp.task('jekyll-rebuild', ['jekyll-build'], function () {
 /**
  * Wait for jekyll-build, then launch the Server
  */
-gulp.task('browser-sync', ['jekyll-build'], function() {
+gulp.task('browser-sync', ['jekyll-build'], function () {
 	browserSync({
 		server: {
 			baseDir: '_site'
@@ -47,22 +47,22 @@ gulp.task('browser-sync', ['jekyll-build'], function() {
 /**
  * Stylus task
  */
-gulp.task('stylus', function(){
-		gulp.src('src/styl/main.styl')
+gulp.task('stylus', function () {
+	gulp.src('src/styl/main.styl')
 		.pipe(plumber())
 		.pipe(stylus({
-			use:[koutoSwiss(), prefixer(), jeet(),rupture()],
+			use: [koutoSwiss(), prefixer(), jeet(), rupture()],
 			compress: true
 		}))
 		.pipe(gulp.dest('_site/assets/css/'))
-		.pipe(browserSync.reload({stream:true}))
+		.pipe(browserSync.reload({ stream: true }))
 		.pipe(gulp.dest('assets/css'))
 });
 
 /**
  * Javascript Task
  */
-gulp.task('js', function(){
+gulp.task('js', function () {
 	return gulp.src('src/js/**/*.js')
 		.pipe(plumber())
 		.pipe(concat('main.js'))
@@ -73,7 +73,7 @@ gulp.task('js', function(){
 /**
  * Imagemin Task
  */
-gulp.task('imagemin', function() {
+gulp.task('imagemin', function () {
 	return gulp.src('src/img/**/*.{jpg,png,gif}')
 		.pipe(plumber())
 		.pipe(imagemin({ optimizationLevel: 3, progressive: true, interlaced: true }))
